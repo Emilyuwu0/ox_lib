@@ -1,0 +1,49 @@
+.container {
+
+    border-radius: 12px;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    text-align: center;
+
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.option {
+    display: flex;
+
+    border-radius: 8px;
+
+
+    align-items: center;
+}
+
+
+
+.key {
+    background-color: #73737373;
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+    width: 25px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    margin-right: 10px;
+}
+
+.description {
+    font-size: 14px;
+    font-weight: 400;
+    flex: 1;
+}

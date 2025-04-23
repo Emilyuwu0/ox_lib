@@ -15,18 +15,19 @@ interface Props {
 
 const useStyles = createStyles((theme, params: { iconColor?: string }) => ({
   buttonContainer: {
-    backgroundColor: theme.colors.dark[6],
-    borderRadius: theme.radius.md,
-    padding: 2,
-    height: 60,
+    backgroundColor:"#000000c2",
+    borderRadius: theme.radius.sm,
+    padding: 10,
+    height: 40,
     scrollMargin: 8,
+    fontSize: 11,
     '&:focus': {
-      backgroundColor: theme.colors.dark[4],
+      backgroundColor: "#000000c2",
       outline: 'none',
     },
   },
   iconImage: {
-    maxWidth: 32,
+    maxWidth: 20,
   },
   buttonWrapper: {
     paddingLeft: 5,
@@ -40,13 +41,13 @@ const useStyles = createStyles((theme, params: { iconColor?: string }) => ({
     height: 32,
   },
   icon: {
-    fontSize: 24,
+    fontSize: 15,
     color: params.iconColor || theme.colors.dark[2],
   },
   label: {
-    color: theme.colors.dark[2],
+    color: '#b9b9b9',
     textTransform: 'uppercase',
-    fontSize: 12,
+    fontSize: 11,
     verticalAlign: 'middle',
   },
   chevronIcon: {
@@ -61,10 +62,12 @@ const useStyles = createStyles((theme, params: { iconColor?: string }) => ({
   progressStack: {
     width: '100%',
     marginRight: 5,
+
   },
   progressLabel: {
     verticalAlign: 'middle',
     marginBottom: 3,
+    fontSize: 11,
   },
 }));
 
@@ -127,7 +130,7 @@ const ListItem = forwardRef<Array<HTMLDivElement | null>, Props>(({ item, index,
             <Progress
               value={item.progress}
               color={item.colorScheme || 'dark.0'}
-              styles={(theme) => ({ root: { backgroundColor: theme.colors.dark[3] } })}
+              styles={(theme) => ({ root: { backgroundColor: theme.colors.dark[3] , height: 4} })}
             />
           </Stack>
         ) : (

@@ -12,51 +12,51 @@ const useStyles = createStyles((theme) => ({
   container: {
     width: 300,
     height: 'fit-content',
-    backgroundColor: theme.colors.dark[6],
+    backgroundImage: 'linear-gradient(144deg, rgb(0, 0, 0) 0%, rgb(18 18 18 / 41%) 100%)',
     color: theme.colors.dark[0],
     padding: 12,
     borderRadius: theme.radius.sm,
-    fontFamily: 'Roboto',
     boxShadow: theme.shadows.sm,
   },
   title: {
     fontWeight: 500,
     lineHeight: 'normal',
+    color: '#ededed',
   },
   description: {
     fontSize: 12,
-    color: theme.colors.dark[2],
-    fontFamily: 'Roboto',
+    color: "#afafaf",
     lineHeight: 'normal',
   },
   descriptionOnly: {
     fontSize: 14,
-    color: theme.colors.dark[2],
-    fontFamily: 'Roboto',
+    color: "#8d8d8d",
+
     lineHeight: 'normal',
   },
 }));
 
-const createAnimation = (from: string, to: string, visible: boolean) => keyframes({
-  from: {
-    opacity: visible ? 0 : 1,
-    transform: `translate${from}`,
-  },
-  to: {
-    opacity: visible ? 1 : 0,
-    transform: `translate${to}`,
-  },
-});
+const createAnimation = (from: string, to: string, visible: boolean) =>
+  keyframes({
+    from: {
+      opacity: visible ? 0 : 1,
+      transform: `translate${from}`,
+    },
+    to: {
+      opacity: visible ? 1 : 0,
+      transform: `translate${to}`,
+    },
+  });
 
 const getAnimation = (visible: boolean, position: string) => {
-  const animationOptions = visible ? '0.2s ease-out forwards' : '0.4s ease-in forwards'
+  const animationOptions = visible ? '0.2s ease-out forwards' : '0.4s ease-in forwards';
   let animation: { from: string; to: string };
 
   if (visible) {
-    animation = position.includes('bottom') ? { from: 'Y(30px)', to: 'Y(0px)' } : { from: 'Y(-30px)', to:'Y(0px)' };
+    animation = position.includes('bottom') ? { from: 'Y(30px)', to: 'Y(0px)' } : { from: 'Y(-30px)', to: 'Y(0px)' };
   } else {
     if (position.includes('right')) {
-      animation = { from: 'X(0px)', to: 'X(100%)' }
+      animation = { from: 'X(0px)', to: 'X(100%)' };
     } else if (position.includes('left')) {
       animation = { from: 'X(0px)', to: 'X(-100%)' };
     } else if (position === 'top-center') {
@@ -68,13 +68,15 @@ const getAnimation = (visible: boolean, position: string) => {
     }
   }
 
-  return `${createAnimation(animation.from, animation.to, visible)} ${animationOptions}`
+  return `${createAnimation(animation.from, animation.to, visible)} ${animationOptions}`;
 };
 
 const durationCircle = keyframes({
   '0%': { strokeDasharray: `0, ${15.1 * 2 * Math.PI}` },
   '100%': { strokeDasharray: `${15.1 * 2 * Math.PI}, 0` },
 });
+const isIconUrl = (icon: string) =>
+  icon.endsWith('.png') || icon.endsWith('.jpg') || icon.endsWith('.svg') || icon.startsWith('/');
 
 const Notifications: React.FC = () => {
   const { classes } = useStyles();
@@ -91,7 +93,7 @@ const Notifications: React.FC = () => {
 
     data.showDuration = data.showDuration !== undefined ? data.showDuration : true;
 
-    if (toastId) setToastKey(prevKey => prevKey + 1);
+    if (toastId) setToastKey((prevKey) => prevKey + 1);
 
     // Backwards compat with old notifications
     switch (position) {
@@ -115,7 +117,7 @@ const Notifications: React.FC = () => {
           data.icon = 'circle-exclamation';
           break;
         default:
-          data.icon = 'circle-info';
+          data.icon = '';
           break;
       }
     }
@@ -123,22 +125,22 @@ const Notifications: React.FC = () => {
     if (!data.iconColor) {
       switch (data.type) {
         case 'error':
-          iconColor = 'red.6';
+          iconColor = '#8c8c8c';
           break;
         case 'success':
-          iconColor = 'teal.6';
+          iconColor = '#fff';  
           break;
         case 'warning':
           iconColor = 'yellow.6';
           break;
         default:
-          iconColor = 'blue.6';
+          iconColor = '';
           break;
       }
     } else {
       iconColor = tinycolor(data.iconColor).toRgbString();
     }
-    
+
     toast.custom(
       (t) => (
         <Box
@@ -184,16 +186,30 @@ const Notifications: React.FC = () => {
                   <ThemeIcon
                     color={iconColor}
                     radius="xl"
-                    size={32}
                     variant={tinycolor(iconColor).getAlpha() < 0 ? undefined : 'light'}
-                    style={{ alignSelf: !data.alignIcon || data.alignIcon === 'center' ? 'center' : 'start' }}
+                    style={{
+                      alignSelf: !data.alignIcon || data.alignIcon === 'center' ? 'center' : 'start',
+                      background: 'transparent',
+                    }}
                   >
-                    <LibIcon icon={data.icon} fixedWidth color={iconColor} animation={data.iconAnimation} />
+                    {typeof data.icon === 'string' && isIconUrl(data.icon) ? (
+                      <img
+                        src={data.icon}
+                        alt="icon"
+                        style={{
+                          width: 35,
+                          height: 35,
+                          objectFit: 'contain',
+                        }}
+                      />
+                    ) : (
+                      <LibIcon icon={data.icon as any} fixedWidth color={iconColor} animation={data.iconAnimation} />
+                    )}
                   </ThemeIcon>
                 )}
               </>
             )}
-            <Stack spacing={0}>
+            <Stack spacing={0} style={{ borderLeft: '1px #ffffff2e solid', paddingLeft: '1rem' }}>
               {data.title && <Text className={classes.title}>{data.title}</Text>}
               {data.description && (
                 <ReactMarkdown

@@ -105,12 +105,28 @@ const InputDialog: React.FC = () => {
         closeOnClickOutside={false}
         size="sm"
         styles={{ title: { textAlign: 'center', width: '100%', fontSize: 18 } }}
-        title={fields.heading}
+        /*     title={fields.heading} */
         withCloseButton={false}
         overlayOpacity={0.5}
         transition="fade"
         exitTransitionDuration={150}
       >
+        <div
+          style={{
+            textAlign: 'center',
+            fontSize: 18,
+            marginBottom: '1rem',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'flex-end',
+            color: '#fff',
+            textTransform: "uppercase",
+            fontWeight: 500,
+          }}
+        >
+          <img src="/only-x3.png" alt="Police" style={{ width: '30px', height: '30px' }} />
+          <span>{fields.heading}</span>
+        </div>
         <form onSubmit={onSubmit}>
           <Stack>
             {fieldForm.fields.map((item, index) => {
@@ -158,10 +174,11 @@ const InputDialog: React.FC = () => {
                 onClick={() => handleClose()}
                 mr={3}
                 disabled={fields.options?.allowCancel === false}
+                style={{ color: '#fff', background: '#555555bf' }}
               >
                 {locale.ui.cancel}
               </Button>
-              <Button uppercase variant="light" type="submit">
+              <Button uppercase variant="light" type="submit" style={{ color: '#fff', background: '#8d8d8dad' }}>
                 {locale.ui.confirm}
               </Button>
             </Group>

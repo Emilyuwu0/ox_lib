@@ -12,18 +12,24 @@ interface Props {
 const useStyles = createStyles((theme, params: { canClose?: boolean }) => ({
   button: {
     borderRadius: 4,
-    flex: '1 15%',
-    alignSelf: 'stretch',
+    flex: '1 12%',
+/*     alignSelf: 'stretch', */
     height: 'auto',
     textAlign: 'center',
     justifyContent: 'center',
-    padding: 2,
+    padding: 0,
+    backgroundColor: 'transparent',
+    
+    '&:hover': {
+      backgroundColor: '#2b2f35', 
+
+    },
   },
   root: {
     border: 'none',
   },
   label: {
-    color: params.canClose === false ? theme.colors.dark[2] : theme.colors.dark[0],
+    color: params.canClose === false ? theme.colors.dark[2] : theme.colors.dark[2],
   },
 }));
 
@@ -32,6 +38,7 @@ const HeaderButton: React.FC<Props> = ({ icon, canClose, iconSize, handleClick }
 
   return (
     <Button
+
       variant="default"
       className={classes.button}
       classNames={{ label: classes.label, root: classes.root }}

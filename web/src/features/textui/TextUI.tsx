@@ -7,27 +7,25 @@ import remarkGfm from 'remark-gfm';
 import type { TextUiPosition, TextUiProps } from '../../typings';
 import MarkdownComponents from '../../config/MarkdownComponents';
 import LibIcon from '../../components/LibIcon';
-
+import './index.css';
 const useStyles = createStyles((theme, params: { position?: TextUiPosition }) => ({
   wrapper: {
     height: '100%',
     width: '100%',
     position: 'absolute',
     display: 'flex',
-    alignItems: 
-      params.position === 'top-center' ? 'baseline' :
-      params.position === 'bottom-center' ? 'flex-end' : 'center',
-    justifyContent: 
-      params.position === 'right-center' ? 'flex-end' :
-      params.position === 'left-center' ? 'flex-start' : 'center',
+    alignItems:
+      params.position === 'top-center' ? 'baseline' : params.position === 'bottom-center' ? 'flex-end' : 'center',
+    justifyContent:
+      params.position === 'right-center' ? 'flex-end' : params.position === 'left-center' ? 'flex-start' : 'center',
   },
   container: {
-    fontSize: 16,
+    fontSize: 14,
     padding: 12,
     margin: 8,
-    backgroundColor: theme.colors.dark[6],
+    backgroundImage: 'linear-gradient(144deg, rgb(0, 0, 0) 0%, rgb(18 18 18 / 41%) 100%)',
     color: theme.colors.dark[0],
-    fontFamily: 'Roboto',
+
     borderRadius: theme.radius.sm,
     boxShadow: theme.shadows.sm,
   },
@@ -55,21 +53,19 @@ const TextUI: React.FC = () => {
         <ScaleFade visible={visible}>
           <Box style={data.style} className={classes.container}>
             <Group spacing={12}>
-              {data.icon && (
-                <LibIcon
-                  icon={data.icon}
-                  fixedWidth
-                  size="lg"
-                  animation={data.iconAnimation}
-                  style={{
-                    color: data.iconColor,
-                    alignSelf: !data.alignIcon || data.alignIcon === 'center' ? 'center' : 'start',
-                  }}
-                />
-              )}
-              <ReactMarkdown components={MarkdownComponents} remarkPlugins={[remarkGfm]}>
-                {data.text}
-              </ReactMarkdown>
+              {/*    <img src='/only-x3.pngg'  style={{ width:30, height:30}}/> */}
+              <div className="container">
+                <div className="options">
+                  <div className="option">
+                    <div className="key">E</div>
+                    <div className="description">Access locker inventory </div>
+                  </div>
+                  <div className="option">
+                    <div className="key">G</div>
+                    <div className="description">Do something else</div>
+                  </div>
+                </div>
+              </div>
             </Group>
           </Box>
         </ScaleFade>

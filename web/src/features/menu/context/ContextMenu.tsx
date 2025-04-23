@@ -20,20 +20,25 @@ const useStyles = createStyles((theme) => ({
     right: '25%',
     width: 320,
     height: 580,
+    /*     backgroundColor: '#000000c2', */
+    padding: 10,
+    borderRadius: 4,
   },
   header: {
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
-    gap: 6,
+    gap: 2,
+    backgroundColor: '#000000c2',
+    borderRadius: 4,
   },
   titleContainer: {
     borderRadius: 4,
     flex: '1 85%',
-    backgroundColor: theme.colors.dark[6],
+    /*   backgroundColor: '#000000c2', */
   },
   titleText: {
-    color: theme.colors.dark[0],
+    color: 'rgb(255, 255, 255)',
     padding: 6,
     textAlign: 'center',
   },
@@ -89,14 +94,29 @@ const ContextMenu: React.FC = () => {
       <ScaleFade visible={visible}>
         <Flex className={classes.header}>
           {contextMenu.menu && (
-            <HeaderButton icon="chevron-left" iconSize={16} handleClick={() => openMenu(contextMenu.menu)} />
+            <HeaderButton icon="chevron-left" iconSize={14} handleClick={() => openMenu(contextMenu.menu)} />
           )}
           <Box className={classes.titleContainer}>
             <Text className={classes.titleText}>
-              <ReactMarkdown components={MarkdownComponents}>{contextMenu.title}</ReactMarkdown>
+              <div
+                style={{
+                  textAlign: 'left',
+                  fontSize: 17,
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  alignItems: 'flex-end',
+                  color: '#fff',
+                  fontWeight: 500,
+                  textTransform: 'uppercase',
+                }}
+              >
+                {' '}
+                <img src="/only-x3.png" alt="Police" style={{ width: '30px', height: '30px' }} />
+                <ReactMarkdown components={MarkdownComponents}>{contextMenu.title}</ReactMarkdown>
+              </div>
             </Text>
           </Box>
-          <HeaderButton icon="xmark" canClose={contextMenu.canClose} iconSize={18} handleClick={closeContext} />
+          <HeaderButton icon="xmark" canClose={contextMenu.canClose} iconSize={12} handleClick={closeContext} />
         </Flex>
         <Box className={classes.buttonsContainer}>
           <Stack className={classes.buttonsFlexWrapper}>

@@ -54,8 +54,24 @@ const AlertDialog: React.FC = () => {
         overlayOpacity={0.5}
         exitTransitionDuration={150}
         transition="fade"
-        title={<ReactMarkdown components={MarkdownComponents}>{dialogData.header}</ReactMarkdown>}
+        /* title={<ReactMarkdown components={MarkdownComponents}>{dialogData.header}</ReactMarkdown>} */
       >
+        <div
+          style={{
+            textAlign: 'left',
+            fontSize: 18,
+            marginBottom: '1rem',
+            display: 'flex',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-end',
+            color: '#fff',
+            fontWeight: 500,
+            textTransform: 'uppercase',
+          }}
+        >
+          <img src="/only-x3.png" alt="Police" style={{ width: '30px', height: '30px' }} />
+          <span>{dialogData.header}</span>
+        </div>{' '}
         <Stack className={classes.contentStack}>
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
@@ -68,7 +84,13 @@ const AlertDialog: React.FC = () => {
           </ReactMarkdown>
           <Group position="right" spacing={10}>
             {dialogData.cancel && (
-              <Button uppercase variant="default" onClick={() => closeAlert('cancel')} mr={3}>
+              <Button
+                uppercase
+                variant="default"
+                onClick={() => closeAlert('cancel')}
+                mr={3}
+                style={{ color: '#fff', background: '#555555bf' }}
+              >
                 {dialogData.labels?.cancel || locale.ui.cancel}
               </Button>
             )}
@@ -77,6 +99,7 @@ const AlertDialog: React.FC = () => {
               variant={dialogData.cancel ? 'light' : 'default'}
               color={dialogData.cancel ? theme.primaryColor : undefined}
               onClick={() => closeAlert('confirm')}
+              style={{ color: '#fff', background: '#8d8d8dad' }}
             >
               {dialogData.labels?.confirm || locale.ui.confirm}
             </Button>

@@ -26,28 +26,30 @@ const useStyles = createStyles((theme, params: { position?: MenuPosition; itemCo
     right: params.position === 'top-right' || params.position === 'bottom-right' ? 1 : undefined,
     left: params.position === 'bottom-left' ? 1 : undefined,
     bottom: params.position === 'bottom-left' || params.position === 'bottom-right' ? 1 : undefined,
-    fontFamily: 'Roboto',
-    width: 384,
+
+    width: 300,
   },
   buttonsWrapper: {
     height: 'fit-content',
-    maxHeight: 415,
+    maxHeight: 430,
     overflow: 'hidden',
     borderRadius: params.itemCount <= 6 || params.selected === params.itemCount - 1 ? theme.radius.md : undefined,
-    backgroundColor: theme.colors.dark[8],
+    /*     backgroundColor: theme.colors.dark[8], */
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
   },
   scrollArrow: {
-    backgroundColor: theme.colors.dark[8],
+    backgroundColor: '#000000c2',
     textAlign: 'center',
     borderBottomLeftRadius: theme.radius.md,
     borderBottomRightRadius: theme.radius.md,
-    height: 25,
+    height: 30,
+    marginTop: 5,
   },
   scrollArrowIcon: {
-    color: theme.colors.dark[2],
+    color: '#afafaf',
     fontSize: 20,
+    marginTop: 4,
   },
 }));
 
@@ -216,10 +218,29 @@ const ListMenu: React.FC = () => {
           classNames={{ tooltip: classes.tooltip }}
         >
           <Box className={classes.container}>
-            <Header title={menu.title} />
+            <div
+              style={{
+                textAlign: 'left',
+                fontSize: 17,
+                marginBottom: '0.5rem',
+                display: 'flex',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-end',
+                color: '#fff',
+                fontWeight: 500,
+                padding: '6px',
+                borderRadius: 4,
+                backgroundColor: '#000000c2',
+                textTransform: 'uppercase',
+              }}
+            >
+              <img src="/only-x3.png" alt="Police" style={{ width: '30px', height: '30px' }} />
+              <span>{menu.title}</span>
+            </div>
+
             <Box className={classes.buttonsWrapper} onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => moveMenu(e)}>
               <FocusTrap active={visible}>
-                <Stack spacing={8} p={8} sx={{ overflowY: 'scroll' }}>
+                <Stack spacing={3} sx={{ overflowY: 'scroll' }}>
                   {menu.items.map((item, index) => (
                     <React.Fragment key={`menu-item-${index}`}>
                       {item.label && (
