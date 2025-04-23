@@ -343,3 +343,11 @@ code {
 .toast-error {
   background-color: #c0392b;
 }
+body{
+  background: linear-gradient(46deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+  font-family: 'Poppins', sans-serif;
+}
+
+.background-modal{
+  background: linear-gradient(46deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%) !important;
+}
