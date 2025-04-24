@@ -1,36 +1,44 @@
-.hud-container {
-    display: flex;
-    gap: 12px;
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
+.stroke-still {
+  stroke: #232323;
+}
+
+.stroke-animation {
+  stroke: #4e4e4e;
+  animation: stroke-spacing 1.2s ease-in infinite, stroke-color 4.8s linear infinite;
+}
+
+@keyframes stroke-spacing {
+  0% {
+    stroke-dasharray: 0 200;
   }
-  
-  .hex-bar {
-    position: relative;
-    width: 48px;
-    height: 55px;
-    background: rgba(255, 255, 255, 0.05);
-    clip-path: polygon(
-      50% 0%, 93% 25%, 93% 75%, 50% 100%,
-      7% 75%, 7% 25%
-    );
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+  45% {
+    stroke-dashoffset: 0;
+    stroke-dasharray: 200 200;
   }
-  
-  .bar-value {
-    font-size: 12px;
-    font-weight: bold;
-    color: white;
+  90% {
+    stroke-dashoffset: -200;
+    stroke-dasharray: 200 200;
   }
-  
-  .bar-icon {
-    margin-top: 2px;
-    color: white;
+  100% {
+    stroke-dashoffset: -200;
+    stroke-dasharray: 200 200;
   }
-  
+}
+
+@keyframes stroke-color {
+  0% {
+    stroke: #3498db;
+  }
+  25% {
+    stroke: #327864;
+  }
+  50% {
+    stroke: #32326e;
+  }
+  75% {
+    stroke: #78325a;
+  }
+  100% {
+    stroke: #3498db;
+  }
+}

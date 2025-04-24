@@ -1,16 +1,10 @@
 import React from 'react';
-import {createStyles, keyframes, RingProgress, Stack, Text, useMantineTheme} from '@mantine/core';
-import {useNuiEvent} from '../../hooks/useNuiEvent';
-import {fetchNui} from '../../utils/fetchNui';
+import { createStyles, keyframes, Stack, Text, useMantineTheme } from '@mantine/core';
+import { useNuiEvent } from '../../hooks/useNuiEvent';
+import { fetchNui } from '../../utils/fetchNui';
 import ScaleFade from '../../transitions/ScaleFade';
-import type {CircleProgressbarProps} from '../../typings';
-
-// 33.5 is the r of the circle
-const progressCircle = keyframes({
-  '0%': { strokeDasharray: `0, ${33.5 * 2 * Math.PI}` },
-  '100%': { strokeDasharray: `${33.5 * 2 * Math.PI}, 0` },
-});
-
+import type { CircleProgressbarProps } from '../../typings';
+import './index.css';
 const useStyles = createStyles((theme, params: { position: 'middle' | 'bottom'; duration: number }) => ({
   container: {
     width: '100%',
@@ -22,15 +16,9 @@ const useStyles = createStyles((theme, params: { position: 'middle' | 'bottom'; 
     alignItems: 'center',
   },
   progress: {
-    '> svg > circle:nth-child(1)': {
-      stroke: theme.colors.dark[5],
-    },
-    // Scuffed way of grabbing the first section and animating it
-    '> svg > circle:nth-child(2)': {
-      transition: 'none',
-      animation: `${progressCircle} linear forwards`,
-      animationDuration: `${params.duration}ms`,
-    },
+    width: 100,
+    height: 100,
+    position: 'relative',
   },
   value: {
     textAlign: 'center',
@@ -46,6 +34,7 @@ const useStyles = createStyles((theme, params: { position: 'middle' | 'bottom'; 
   },
   wrapper: {
     marginTop: params.position === 'middle' ? 25 : undefined,
+    alignItems: 'center',
   },
 }));
 
@@ -80,24 +69,38 @@ const CircleProgressbar: React.FC = () => {
     }, onePercent);
   });
 
+  // Perímetro estimado del hexágono (ajustable si cambias el tamaño)
+  const hexagonPerimeter = 260;
+  const strokeDashoffset = hexagonPerimeter - (hexagonPerimeter * value) / 100;
+
   return (
-    <>
-      <Stack spacing={0} className={classes.container}>
-        <ScaleFade visible={visible} onExitComplete={() => fetchNui('progressComplete')}>
-          <Stack spacing={0} align="center" className={classes.wrapper}>
-            <RingProgress
-              size={90}
-              thickness={7}
-              sections={[{ value: 0, color: theme.primaryColor }]}
-              onAnimationEnd={() => setVisible(false)}
-              className={classes.progress}
-              label={<Text className={classes.value}>{value}%</Text>}
+    <Stack spacing={0} className={classes.container}>
+      <ScaleFade visible={visible} onExitComplete={() => fetchNui('progressComplete')}>
+        <Stack spacing={0} className={classes.wrapper}>
+          <svg width="100" height="100" viewBox="0 0 100 100" className={classes.progress}>
+            <polygon
+              points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5"
+              fill="none"
+              stroke="#2b2b2b38"
+              strokeWidth="7"
             />
-            {label && <Text className={classes.label}>{label}</Text>}
-          </Stack>
-        </ScaleFade>
-      </Stack>
-    </>
+            <polygon
+              points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5"
+              fill="none"
+              stroke="#000"
+              strokeWidth="7"
+              strokeDasharray={hexagonPerimeter}
+              strokeDashoffset={strokeDashoffset}
+              style={{ transition: 'stroke-dashoffset 0.1s linear' }}
+            />
+            <text x="50" y="55" textAnchor="middle" fill={theme.colors.gray[3]} fontSize="14">
+              {value}%
+            </text>
+          </svg>
+          {/*        {label && <Text className={classes.label}>{label}</Text>} */}
+        </Stack>
+      </ScaleFade>
+    </Stack>
   );
 };
 
