@@ -1,6 +1,8 @@
 import { useNuiEvent } from '../../hooks/useNuiEvent';
 import { toast, Toaster } from 'react-hot-toast';
 import ReactMarkdown from 'react-markdown';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+
 import { Box, Center, createStyles, Group, keyframes, RingProgress, Stack, Text, ThemeIcon } from '@mantine/core';
 import React, { useState } from 'react';
 import tinycolor from 'tinycolor2';
@@ -24,13 +26,13 @@ const useStyles = createStyles((theme) => ({
     color: '#ededed',
   },
   description: {
-    fontSize: 12,
-    color: "#afafaf",
+    fontSize: '10px',
+    color: '#afafaf',
     lineHeight: 'normal',
   },
   descriptionOnly: {
-    fontSize: 14,
-    color: "#8d8d8d",
+    fontSize: 12,
+    color: '#8d8d8d',
 
     lineHeight: 'normal',
   },
@@ -117,7 +119,7 @@ const Notifications: React.FC = () => {
           data.icon = 'circle-exclamation';
           break;
         default:
-          data.icon = '';
+          data.imageIcon = '';
           break;
       }
     }
@@ -128,7 +130,7 @@ const Notifications: React.FC = () => {
           iconColor = '#8c8c8c';
           break;
         case 'success':
-          iconColor = '#fff';  
+          iconColor = '#fff';
           break;
         case 'warning':
           iconColor = 'yellow.6';
@@ -150,77 +152,96 @@ const Notifications: React.FC = () => {
           }}
           className={`${classes.container}`}
         >
-          <Group noWrap spacing={12}>
-            {data.icon && (
-              <>
-                {data.showDuration ? (
-                  <RingProgress
-                    key={toastKey}
-                    size={38}
-                    thickness={2}
-                    sections={[{ value: 100, color: iconColor }]}
-                    style={{ alignSelf: !data.alignIcon || data.alignIcon === 'center' ? 'center' : 'start' }}
-                    styles={{
-                      root: {
-                        '> svg > circle:nth-of-type(2)': {
-                          animation: `${durationCircle} linear forwards reverse`,
-                          animationDuration: `${duration}ms`,
-                        },
-                        margin: -3,
-                      },
-                    }}
-                    label={
-                      <Center>
-                        <ThemeIcon
-                          color={iconColor}
-                          radius="xl"
-                          size={32}
-                          variant={tinycolor(iconColor).getAlpha() < 0 ? undefined : 'light'}
-                        >
-                          <LibIcon icon={data.icon} fixedWidth color={iconColor} animation={data.iconAnimation} />
-                        </ThemeIcon>
-                      </Center>
-                    }
-                  />
-                ) : (
-                  <ThemeIcon
+       <Group noWrap spacing={12}>
+  {data.imageIcon || data.icon ? (
+    <>
+      {data.showDuration ? (
+        <RingProgress
+          key={toastKey}
+          size={38}
+          thickness={2}
+          sections={[{ value: 100, color: iconColor }]}
+          style={{
+            alignSelf: !data.alignIcon || data.alignIcon === 'center' ? 'center' : 'start',
+          }}
+          styles={{
+            root: {
+              '> svg > circle:nth-of-type(2)': {
+                animation: `${durationCircle} linear forwards reverse`,
+                animationDuration: `${duration}ms`,
+              },
+              margin: -3,
+            },
+          }}
+          label={
+            <Center>
+              <ThemeIcon
+                color={iconColor}
+                radius="xl"
+                size={32}
+                variant={
+                  tinycolor(iconColor).getAlpha() < 0 ? undefined : 'light'
+                }
+              >
+                {data.imageIcon ? (
+                  <img src={data.imageIcon} alt="icon" width={20} height={20} />
+                ) : data.icon ? (
+                  <LibIcon
+                    icon={data.icon as IconProp}
+                    fixedWidth
                     color={iconColor}
-                    radius="xl"
-                    variant={tinycolor(iconColor).getAlpha() < 0 ? undefined : 'light'}
-                    style={{
-                      alignSelf: !data.alignIcon || data.alignIcon === 'center' ? 'center' : 'start',
-                      background: 'transparent',
-                    }}
-                  >
-                    {typeof data.icon === 'string' && isIconUrl(data.icon) ? (
-                      <img
-                        src={data.icon}
-                        alt="icon"
-                        style={{
-                          width: 35,
-                          height: 35,
-                          objectFit: 'contain',
-                        }}
-                      />
-                    ) : (
-                      <LibIcon icon={data.icon as any} fixedWidth color={iconColor} animation={data.iconAnimation} />
-                    )}
-                  </ThemeIcon>
-                )}
-              </>
-            )}
-            <Stack spacing={0} style={{ borderLeft: '1px #ffffff2e solid', paddingLeft: '1rem' }}>
-              {data.title && <Text className={classes.title}>{data.title}</Text>}
-              {data.description && (
-                <ReactMarkdown
-                  components={MarkdownComponents}
-                  className={`${!data.title ? classes.descriptionOnly : classes.description} description`}
-                >
-                  {data.description}
-                </ReactMarkdown>
-              )}
-            </Stack>
-          </Group>
+                    animation={data.iconAnimation}
+                  />
+                ) : null}
+              </ThemeIcon>
+            </Center>
+          }
+        />
+      ) : (
+        <ThemeIcon
+          color={iconColor}
+          radius="xl"
+          variant={tinycolor(iconColor).getAlpha() < 0 ? undefined : 'light'}
+          style={{
+            alignSelf: !data.alignIcon || data.alignIcon === 'center' ? 'center' : 'start',
+            background: 'transparent',
+          }}
+        >
+          {data.imageIcon ? (
+            <img src={data.imageIcon} alt="icon" width={32} height={32} />
+          ) : data.icon ? (
+            <LibIcon
+              icon={data.icon as IconProp}
+              fixedWidth
+              color={iconColor}
+              animation={data.iconAnimation}
+            />
+          ) : null}
+        </ThemeIcon>
+      )}
+    </>
+  ) : null}
+
+  <Stack
+    spacing={0}
+    style={{
+      borderLeft: '1px rgba(204, 204, 204, 0.18) solid',
+      paddingLeft: '1rem',
+    }}
+  >
+    {data.title && <Text className={classes.title}>{data.title}</Text>}
+
+    {data.description && (
+      <ReactMarkdown
+        components={MarkdownComponents}
+        className={`${!data.title ? classes.descriptionOnly : classes.description} description`}
+      >
+        {data.description}
+      </ReactMarkdown>
+    )}
+  </Stack>
+</Group>
+
         </Box>
       ),
       {

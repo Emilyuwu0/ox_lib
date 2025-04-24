@@ -8,7 +8,7 @@ export const debugTextUI = () => {
       data: {
         text: '[E] - Access locker inventory  \n [G] - Do something else',
         position: 'right-center',
-              icon: '/only-x3.png',
+        imageIcon: '/only-x3.png',
       },
     },
   ]);

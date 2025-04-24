@@ -8,6 +8,7 @@ export interface TextUiProps {
   text: string;
   position?: TextUiPosition;
   icon?: IconProp;
+  imageIcon?: string;
   iconColor?: string;
   iconAnimation?: IconAnimation;
   style?: React.CSSProperties;
