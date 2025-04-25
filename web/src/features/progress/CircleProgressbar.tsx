@@ -1,51 +1,15 @@
 import React from 'react';
-import { createStyles, keyframes, Stack, Text, useMantineTheme } from '@mantine/core';
+import { Stack } from '@mantine/core';
 import { useNuiEvent } from '../../hooks/useNuiEvent';
 import { fetchNui } from '../../utils/fetchNui';
 import ScaleFade from '../../transitions/ScaleFade';
 import type { CircleProgressbarProps } from '../../typings';
 import './index.css';
-const useStyles = createStyles((theme, params: { position: 'middle' | 'bottom'; duration: number }) => ({
-  container: {
-    width: '100%',
-    height: params.position === 'middle' ? '100%' : '20%',
-    bottom: 0,
-    position: 'absolute',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  progress: {
-    width: 100,
-    height: 100,
-    position: 'relative',
-  },
-  value: {
-    textAlign: 'center',
-    fontFamily: 'Roboto Mono',
-    textShadow: theme.shadows.sm,
-    color: theme.colors.gray[3],
-  },
-  label: {
-    textAlign: 'center',
-    textShadow: theme.shadows.sm,
-    color: theme.colors.gray[3],
-    height: 25,
-  },
-  wrapper: {
-    marginTop: params.position === 'middle' ? 25 : undefined,
-    alignItems: 'center',
-  },
-}));
-
 const CircleProgressbar: React.FC = () => {
   const [visible, setVisible] = React.useState(false);
   const [progressDuration, setProgressDuration] = React.useState(0);
   const [position, setPosition] = React.useState<'middle' | 'bottom'>('middle');
   const [value, setValue] = React.useState(0);
-  const [label, setLabel] = React.useState('');
-  const theme = useMantineTheme();
-  const { classes } = useStyles({ position, duration: progressDuration });
 
   useNuiEvent('progressCancel', () => {
     setValue(99);
@@ -56,49 +20,81 @@ const CircleProgressbar: React.FC = () => {
     if (visible) return;
     setVisible(true);
     setValue(0);
-    setLabel(data.label || '');
     setProgressDuration(data.duration);
     setPosition(data.position || 'middle');
     const onePercent = data.duration * 0.01;
     const updateProgress = setInterval(() => {
-      setValue((previousValue) => {
-        const newValue = previousValue + 1;
-        newValue >= 100 && clearInterval(updateProgress);
-        return newValue;
+      setValue((prev) => {
+        const newVal = prev + 1;
+        if (newVal >= 100) clearInterval(updateProgress);
+        return newVal;
       });
     }, onePercent);
   });
 
-  // Perímetro estimado del hexágono (ajustable si cambias el tamaño)
-  const hexagonPerimeter = 260;
-  const strokeDashoffset = hexagonPerimeter - (hexagonPerimeter * value) / 100;
-
   return (
-    <Stack spacing={0} className={classes.container}>
+    <Stack
+      spacing={0}
+      style={{
+        width: '100%',
+        height: position === 'middle' ? '100%' : '20%',
+        bottom: 0,
+        position: 'absolute',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
       <ScaleFade visible={visible} onExitComplete={() => fetchNui('progressComplete')}>
-        <Stack spacing={0} className={classes.wrapper}>
-          <svg width="100" height="100" viewBox="0 0 100 100" className={classes.progress}>
-            <polygon
-              points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5"
-              fill="none"
-              stroke="#2b2b2b38"
-              strokeWidth="7"
+        <div className="w-[3.0625rem] h-[3.9375rem] relative">
+          <svg
+            width="60"
+            height="60"
+            viewBox="0 0 53 59"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="absolute left-0 top-0"
+          >
+            <path
+              d="M21.5 2.5L5.80578 10.5483C3.46939 11.7465 1.99999 14.1513 1.99999 16.777L1.99999 41.5182C1.99999 43.987 3.30045 46.2732 5.42246 47.535L20.5 56.5"
+              stroke="#FFFFFF"
+              strokeOpacity="0.85"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeDasharray="132"
+              strokeDashoffset={(132 - (132 * value) / 100).toFixed(2)}
+              className="transition-all"
             />
-            <polygon
-              points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5"
-              fill="none"
-              stroke="#000"
-              strokeWidth="7"
-              strokeDasharray={hexagonPerimeter}
-              strokeDashoffset={strokeDashoffset}
-              style={{ transition: 'stroke-dashoffset 0.1s linear' }}
+            <path
+              d="M51 39.5V15.9246C51 13.2221 49.4444 10.7611 47.0034 9.60161L31 2"
+              stroke="#FFFFFF"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeDasharray="132"
+              strokeDashoffset={(-132 + (132 * value) / 100).toFixed(2)}
+              className="transition-all"
             />
-            <text x="50" y="55" textAnchor="middle" fill={theme.colors.gray[3]} fontSize="14">
-              {value}%
-            </text>
+            <path
+              opacity="0.4"
+              d="M21.5 2.5L5.80578 10.5483C3.46939 11.7465 1.99999 14.1513 1.99999 16.777L1.99999 41.5182C1.99999 43.987 3.30045 46.2732 5.42246 47.535L20.5 56.5"
+              stroke="#FFFFFF"
+              strokeOpacity="0.85"
+              strokeWidth="4"
+              strokeLinecap="round"
+            />
+            <path
+              opacity="0.4"
+              d="M51 39.5V15.9246C51 13.2221 49.4444 10.7611 47.0034 9.60161L31 2"
+              stroke="#FFFFFF"
+              strokeWidth="4"
+              strokeLinecap="round"
+            />
           </svg>
-          {/*        {label && <Text className={classes.label}>{label}</Text>} */}
-        </Stack>
+          <div style={{ position: 'absolute', top: '49.5%', left: '50%', transform: 'translate(-50%, -50%)' , color: 'white'}}> %{value}</div>
+          <div style={{ position: 'absolute', top: '53%', left: '51%', transform: 'translate(-50%, -50%)' }}>
+         <img src='/only-x3.png' width={35} height={35}/>
+          </div>
+        </div>
       </ScaleFade>
     </Stack>
   );

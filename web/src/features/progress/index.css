@@ -1,44 +1,9 @@
-.stroke-still {
-  stroke: #232323;
-}
-
-.stroke-animation {
-  stroke: #4e4e4e;
-  animation: stroke-spacing 1.2s ease-in infinite, stroke-color 4.8s linear infinite;
-}
-
-@keyframes stroke-spacing {
-  0% {
-    stroke-dasharray: 0 200;
-  }
-  45% {
-    stroke-dashoffset: 0;
-    stroke-dasharray: 200 200;
-  }
-  90% {
-    stroke-dashoffset: -200;
-    stroke-dasharray: 200 200;
-  }
-  100% {
-    stroke-dashoffset: -200;
-    stroke-dasharray: 200 200;
-  }
-}
-
-@keyframes stroke-color {
-  0% {
-    stroke: #3498db;
-  }
-  25% {
-    stroke: #327864;
-  }
-  50% {
-    stroke: #32326e;
-  }
-  75% {
-    stroke: #78325a;
-  }
-  100% {
-    stroke: #3498db;
-  }
+.percentage-text {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px; /* Ajusta el tamaño si quieres */
+  font-weight: bold;
+  color: white; /* O el color que estés usando */
 }
