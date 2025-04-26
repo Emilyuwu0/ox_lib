@@ -92,7 +92,7 @@ const CircleProgressbar: React.FC = () => {
           </svg>
           <div style={{ position: 'absolute', top: '49.5%', left: '50%', transform: 'translate(-50%, -50%)' , color: 'white'}}> %{value}</div>
           <div style={{ position: 'absolute', top: '53%', left: '51%', transform: 'translate(-50%, -50%)' }}>
-         <img src='/only-x3.png' width={35} height={35}/>
+         <img src='https://r2.fivemanage.com/aZXPKLZCJZlEQhKvfx0Uh/only-x3.png' width={35} height={35}/>
           </div>
         </div>
       </ScaleFade>

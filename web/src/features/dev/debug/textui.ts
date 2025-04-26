@@ -8,7 +8,7 @@ export const debugTextUI = () => {
       data: {
         text: '[E] - Access locker inventory  \n [G] - Do something else',
         position: 'right-center',
-        imageIcon: '/only-x3.png',
+        imageIcon: 'https://r2.fivemanage.com/aZXPKLZCJZlEQhKvfx0Uh/only-x3.png',
       },
     },
   ]);

@@ -36,7 +36,7 @@ export const debugCustomNotification = () => {
         title: 'Custom icon success',
         description: 'Notification description',
         type: 'success',
-        imageIcon: '/only-x3.png',
+        imageIcon: 'https://r2.fivemanage.com/aZXPKLZCJZlEQhKvfx0Uh/only-x3.png',
         showDuration: false,
       },
     },

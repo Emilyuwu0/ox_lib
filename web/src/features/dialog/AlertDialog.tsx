@@ -69,7 +69,7 @@ const AlertDialog: React.FC = () => {
             textTransform: 'uppercase',
           }}
         >
-          <img src="/only-x3.png" alt="Police" style={{ width: '30px', height: '30px' }} />
+          <img src="https://r2.fivemanage.com/aZXPKLZCJZlEQhKvfx0Uh/only-x3.pngg" alt="Police" style={{ width: '30px', height: '30px' }} />
           <span>{dialogData.header}</span>
         </div>{' '}
         <Stack className={classes.contentStack}>
