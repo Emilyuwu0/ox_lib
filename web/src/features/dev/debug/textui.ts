@@ -6,7 +6,7 @@ export const debugTextUI = () => {
     {
       action: 'textUi',
       data: {
-        text: '[E] - Access locker inventory  \n [G] - Do something else',
+        text: 'E | Access locker inventory  \n G | Do something else',
         position: 'right-center',
         imageIcon: 'https://r2.fivemanage.com/aZXPKLZCJZlEQhKvfx0Uh/only-x3.png',
       },

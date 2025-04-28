@@ -7,7 +7,7 @@ import remarkGfm from 'remark-gfm';
 import type { TextUiPosition, TextUiProps } from '../../typings';
 import MarkdownComponents from '../../config/MarkdownComponents';
 import LibIcon from '../../components/LibIcon';
-import './index.css';
+
 const useStyles = createStyles((theme, params: { position?: TextUiPosition }) => ({
   wrapper: {
     height: '100%',
@@ -31,6 +31,7 @@ const useStyles = createStyles((theme, params: { position?: TextUiPosition }) =>
   },
 }));
 
+
 const TextUI: React.FC = () => {
   const [data, setData] = React.useState<TextUiProps>({
     text: '',
@@ -53,19 +54,21 @@ const TextUI: React.FC = () => {
         <ScaleFade visible={visible}>
           <Box style={data.style} className={classes.container}>
             <Group spacing={12}>
-              {/*    <img src='/only-x3.pngg'  style={{ width:30, height:30}}/> */}
-              <div className="container">
-                <div className="options">
-                  <div className="option">
-                    <div className="key">E</div>
-                    <div className="description">Access locker inventory </div>
-                  </div>
-                  <div className="option">
-                    <div className="key">G</div>
-                    <div className="description">Do something else</div>
-                  </div>
-                </div>
-              </div>
+              {data.icon && (
+                <LibIcon
+                  icon={data.icon}
+                  fixedWidth
+                  size="lg"
+                  animation={data.iconAnimation}
+                  style={{
+                    color: data.iconColor,
+                    alignSelf: !data.alignIcon || data.alignIcon === 'center' ? 'center' : 'start',
+                  }}
+                />
+              )}
+              <ReactMarkdown components={MarkdownComponents} remarkPlugins={[remarkGfm]}>
+                {data.text}
+              </ReactMarkdown>
             </Group>
           </Box>
         </ScaleFade>
