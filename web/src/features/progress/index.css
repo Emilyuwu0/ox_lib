@@ -3,7 +3,7 @@
   top: 48%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 12px; /* Ajusta el tamaño si quieres */
+  font-size: 12px; 
   font-weight: bold;
-  color: white; /* O el color que estés usando */
+  color: white; 
 }
