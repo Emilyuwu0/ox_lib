@@ -22,8 +22,10 @@ const useStyles = createStyles((theme, params: { iconColor?: string }) => ({
     scrollMargin: 8,
     fontSize: 11,
     '&:focus': {
-      backgroundColor: "#000000c2",
+      backgroundColor: "#535353",
+      opacity: 0.6,
       outline: 'none',
+      color: "white",
     },
   },
   iconImage: {
@@ -55,7 +57,8 @@ const useStyles = createStyles((theme, params: { iconColor?: string }) => ({
     color: theme.colors.dark[2],
   },
   scrollIndexValue: {
-    color: theme.colors.dark[2],
+
+    color: "white",
     textTransform: 'uppercase',
     fontSize: 14,
   },
