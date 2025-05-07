@@ -21,7 +21,7 @@ const useStyles = createStyles((theme, params: { disabled?: boolean; readOnly?: 
   },
   label: {
     width: '100%',
-    color: params.disabled ? "#fff": theme.colors.dark[0],
+    color: params.disabled ? "#fff": "red"/*  theme.colors.dark[0] */,
     whiteSpace: 'pre-wrap',
   },
   button: {
